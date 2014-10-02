@@ -1,0 +1,19 @@
+{
+	"ImportPath": "github.com/wmluke/translate",
+	"GoVersion": "go1.3.3",
+	"Deps": [
+		{
+			"ImportPath": "github.com/codegangsta/cli",
+			"Comment": "1.2.0-26-gf7ebb76",
+			"Rev": "f7ebb761e83e21225d1d8954fde853bf8edd46c4"
+		},
+		{
+			"ImportPath": "github.com/dmotylev/goproperties",
+			"Rev": "7cbffbaada472bc302cbaca51c1d5ed2682eb509"
+		},
+		{
+			"ImportPath": "github.com/jmcvetta/napping",
+			"Rev": "5292ff1b0132449a9a928004afd03f23be9d750d"
+		}
+	]
+}

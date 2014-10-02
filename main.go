@@ -1,4 +1,12 @@
-// A command line utility to translate [Java ResourceBundle Properties Files](http://docs.oracle.com/javase/tutorial/i18n/resbundle/propfile.html) with Google Translate.
+// A command line utility to translate Java ResourceBundle Properties Files with Google Translate.
+//
+// Note: Non-ascii unicode characters are escaped per http://docs.oracle.com/javase/7/docs/api/java/util/PropertyResourceBundle.html
+//
+// Example
+//    translate --source en --target de translations.properties translations_de.properties
+//
+// References
+//   * http://docs.oracle.com/javase/tutorial/i18n/resbundle/propfile.html
 package main
 
 import (

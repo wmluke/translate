@@ -14,6 +14,10 @@
 		{
 			"ImportPath": "github.com/jmcvetta/napping",
 			"Rev": "5292ff1b0132449a9a928004afd03f23be9d750d"
+		},
+		{
+			"ImportPath": "github.com/stretchr/testify/assert",
+			"Rev": "de7fcff264cd05cc0c90c509ea789a436a0dd206"
 		}
 	]
 }

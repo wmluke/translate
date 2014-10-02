@@ -26,15 +26,23 @@ func init() {
 	log.SetFlags(log.Ltime | log.Lshortfile)
 }
 
+var apiUrl = "https://www.googleapis.com/language/translate/v2"
+
+type Translation struct {
+	TranslatedText string `json:"translatedText"`
+}
+
+type TranslationData struct {
+	Translations []Translation `json:"translations"`
+}
+
+type TranslationResponse struct {
+	Data TranslationData `json:"data"`
+}
+
 // Translate the given phrase with Google Translate
 func translate(key string, phrase string, source string, target string) (translation string, err error) {
-	res := struct {
-			Data struct {
-				Translations []struct {
-				TranslatedText string `json:"translatedText"`
-			} `json:"translations"`
-			}
-		}{}
+	res := TranslationResponse{}
 
 	p := napping.Params{
 		"key": key,
@@ -43,7 +51,7 @@ func translate(key string, phrase string, source string, target string) (transla
 		"target": target,
 	}
 
-	resp, err := napping.Get("https://www.googleapis.com/language/translate/v2", &p, &res, nil)
+	resp, err := napping.Get(apiUrl, &p, &res, nil)
 	if err != nil {
 		log.Fatal(err)
 		return
@@ -51,15 +59,20 @@ func translate(key string, phrase string, source string, target string) (transla
 
 	if resp.Status() != 200 {
 		err = errors.New("google translate returned "+strconv.Itoa(resp.Status()))
-		log.Println("translate failed", source, target, phrase)
+		fmt.Printf("failed to translate <%v> from `%v` to `%v`\n", phrase, source, target)
 		return
 	}
 
 	translation = res.Data.Translations[0].TranslatedText
-
-	log.Println("translate ", phrase, translation)
-
+	fmt.Printf("translated from %v to %v:\n", source, target)
+	fmt.Printf("  > %v\n", phrase)
+	fmt.Printf("  > %v\n\n", translation)
 	return
+}
+
+// escape non-ascii unicode characters per http://docs.oracle.com/javase/7/docs/api/java/util/PropertyResourceBundle.html
+func escapeNonAscii(phrase string) string {
+	return strings.Trim(fmt.Sprintf("%+q", phrase), "\"")
 }
 
 // Return a list of property names sorted alphabetically
@@ -97,7 +110,7 @@ OPTIONS:
 	app := cli.NewApp()
 	app.Name = "translate"
 	app.Usage = "translate a Java ResourceBundle Properties file with Google Translate"
-	app.Version = "0.1.0"
+	app.Version = "0.1.1"
 	app.Author = "Luke Bunselmeyer"
 	app.EnableBashCompletion = true
 	app.Flags = []cli.Flag {
@@ -172,8 +185,7 @@ OPTIONS:
 				continue
 			} else {
 				if k != "" && t != "" {
-					// escape non-ascii unicode characters per http://docs.oracle.com/javase/7/docs/api/java/util/PropertyResourceBundle.html
-					te := strings.Trim(fmt.Sprintf("%+q", t), "\"")
+					te := escapeNonAscii(t)
 					out.WriteString(k + " = " + te + "\n")
 				}
 			}

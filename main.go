@@ -1,3 +1,4 @@
+// A command line utility to translate [Java ResourceBundle Properties Files](http://docs.oracle.com/javase/tutorial/i18n/resbundle/propfile.html) with Google Translate.
 package main
 
 import (
@@ -17,6 +18,7 @@ func init() {
 	log.SetFlags(log.Ltime | log.Lshortfile)
 }
 
+// Translate the given phrase with Google Translate
 func translate(key string, phrase string, source string, target string) (translation string, err error) {
 	res := struct {
 			Data struct {
@@ -52,6 +54,7 @@ func translate(key string, phrase string, source string, target string) (transla
 	return
 }
 
+// Return a list of property names sorted alphabetically
 func keys(p goproperties.Properties) []string {
 	keys := make([]string, len(p))
 	i := 0

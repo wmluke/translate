@@ -31,3 +31,6 @@ OPTIONS:
    --generate-bash-completion
    --version, -v		print the version
 ```
+
+## License
+MIT

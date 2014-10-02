@@ -2,6 +2,12 @@
 
 A command line utility to translate [Java ResourceBundle Properties Files](http://docs.oracle.com/javase/tutorial/i18n/resbundle/propfile.html) with Google Translate.
 
+## Install
+
+```bash
+$ go get github.com/wmluke/translate
+```
+
 ## Usage
 
 ```
